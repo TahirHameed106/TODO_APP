@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="todoapp.css">
+    <title>ToDoApp</title>
+</head>
+<body>
+    <h1>Todo-List</h1>
+    <div id="TodoList">
+        <div class="input-group">
+            <input id="todoinput" type="text" placeholder="Add a new task..." />
+            <button  id="add-btn" onclick="Todolist()">Add</button>
+            <button id="update-btn" style="display:none" onclick="updateTask()">Update</button>
+        </div>
+        <ul id="todo-list">
+        </ul>
+    </div>
+
+
+    <script src="todoapp.js"></script>
+</body>
+</html>

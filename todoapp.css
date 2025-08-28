@@ -1,0 +1,196 @@
+/* Minimal, responsive CSS for index.html + todoapp.js
+   Clean teal ↔ purple palette, buttons & list actions aligned right.
+*/
+
+:root{
+  --bg: #eaf6ff;       /* brighter, airy background */
+  --card: #fbf4f4;     /* pure white card */
+  --text: #051527;     /* deep text for contrast */
+  --muted: #4b6176;    /* slightly brighter muted color */
+  --teal: #00c2d9;     /* clearer, brighter teal */
+  --purple: #6d28d9;   /* vivid, modern purple */
+  --danger: #ff4d5a;   /* brighter delete color */
+  --radius: 10px;
+  --gap: 12px;
+  --border-dark: rgba(5,18,39,0.16); /* NEW: darker border color */
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(180deg,var(--bg),#e9f2fb);
+  display:flex;
+  align-items:center;
+  flex-direction: column;
+  /* justify-content:center; */
+  padding:36px 16px;
+  color:var(--text);
+}
+
+/* Page title */
+h1{
+  width:100%;
+  display: block;
+  max-width:720px;
+  margin:0 auto 18px;
+  text-align:center;
+  font-size:1.8rem;
+  font-weight:800;
+  color:var(--purple);
+  padding:12px 16px;
+  border-radius:10px;
+  background:linear-gradient(90deg, rgba(101, 29, 225, 0.06), rgba(13, 157, 182, 0.04));
+  box-shadow:0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Card */
+#TodoList{
+  width:100%;
+  max-width:720px;
+  background:var(--card);
+  border-radius:12px;
+  padding:18px;
+  box-shadow:0 12px 36px rgba(15,23,42,0.06);
+  border: 1px solid var(--border-dark); /* darkened border */
+}
+
+/* Input row */
+.input-group{
+  display:flex;
+  gap:var(--gap);
+  align-items:center;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+#todoinput{
+  flex:1 1 70%;
+  min-width:200px;
+  padding:12px 14px;
+  border:1px solid var(--border-dark); /* darkened border */
+  border-radius:var(--radius);
+  font-size:1rem;
+  outline:none;
+  background:#fff;
+  color:var(--text);
+}
+#todoinput::placeholder{ color:#9aa6bf; }
+#todoinput:focus{
+  box-shadow:0 8px 24px rgba(124,58,237,0.08);
+  border-color:var(--purple);
+  transform:translateY(-1px);
+}
+
+/* Add / Update primary buttons */
+#add-btn, #update-btn{
+
+  padding:10px 16px;
+  border-radius:8px;
+  border:none;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+  min-width:96px;
+}
+
+#add-btn{
+  background:linear-gradient(90deg,var(--teal),var(--purple));
+}
+#update-btn{
+  background:var(--purple);
+}
+
+/* Todo list */
+.todo-list-box{ /* optional wrapper if present */
+  width:100%;
+  max-width:560px;
+  margin:0 auto;
+  background:linear-gradient(180deg,#fbfdff,#f6fbff);
+  border-radius:10px;
+  padding:12px;
+  border:1px solid var(--border-dark); /* darkened border */
+  max-height:56vh;
+  overflow:auto;
+}
+
+#todo-list{
+  list-style:none;
+  padding:6px;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-height:56vh;
+  overflow:auto;
+}
+
+/* Item layout */
+#todo-list li{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ffffff,#f4fbff);
+  border:1px solid var(--border-dark); /* darkened border */
+  box-shadow:0 6px 18px rgba(6,78,120,0.04);
+}
+
+/* Label grows so actions sit right */
+.todo-label {
+    flex: 1 1 auto; /* takes remaining space */
+    padding-right: 8px;
+    word-break: break-word;
+}
+
+/* Actions aligned right */
+.todo-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto; /* push actions to the right */
+}
+
+/* Small action buttons (no class required in JS) */
+#todo-list button{
+  padding:6px 8px;
+  border-radius:8px;
+  border:none;
+  font-size:0.9rem;
+  font-weight:700;
+  color:#fff;
+  cursor:pointer;
+  margin:3.5px;
+}
+
+/* Edit / Delete specific visuals based on text */
+#todo-list button:nth-last-child(1){ /* typically Edit */
+  background:linear-gradient(90deg,#38bdf8,#2563eb);
+}
+#todo-list button:nth-last-child(2){ /* typically Delete */
+  background:linear-gradient(90deg,#fb7185,#ef4444);
+}
+
+/* Empty state */
+.empty-state{
+  text-align:center;
+  color:var(--muted);
+  padding:14px;
+  font-weight:600;
+}
+
+/* Responsive */
+@media (max-width:720px){
+  h1{ font-size:1.4rem; padding:10px }
+  #TodoList{ padding:14px }
+  #todoinput{ font-size:0.98rem; padding:10px }
+  #add-btn,#update-btn{ padding:9px 12px; min-width:88px }
+}
+
+@media (max-width:520px){
+  .input-group{ flex-direction:column; align-items:stretch; gap:10px }
+  #todoinput{ width:100% }
+  #add-btn,#update-btn{ width:100% }
+  #todo-list li{ flex-direction:column; align-items:flex-start; gap:8px }
+  .todo-actions{ width:100%; justify-content:flex-end }
+}
