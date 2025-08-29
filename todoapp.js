@@ -12,8 +12,31 @@ function Todolist() {
         // normal add
         todoarr.push(value);
         task.value = "";
+        saveToLocalStorage();   // persist after add
     }
     TodoShow();
+}
+
+function saveToLocalStorage() {
+   try{ localStorage.setItem("todoItems", JSON.stringify(todoarr));
+   }catch(e){ alert("Local Storage is not supported in your browser.");  }
+}
+
+function loadFromLocalStorage() {
+   try{
+    var storedItems = localStorage.getItem("todoItems"); 
+    todoarr = storedItems ? JSON.parse(storedItems) : [];
+   }catch(e){ alert("Local Storage is not supported in your browser.");  }
+   TodoShow();
+}
+
+function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
 }
 
 function TodoShow() {
@@ -21,7 +44,7 @@ function TodoShow() {
     var listHTML = "";
     for (let i = 0; i < todoarr.length; i++) {
         listHTML += `<li>
-            <span class="todo-label">${todoarr[i]}</span>
+            <span class="todo-label">${escapeHtml(todoarr[i])}</span>
             <div class="todo-actions">
                 <button class="delete-btn" onclick="Tododelete(${i})">Delete</button>
                 <button class="edit-btn" onclick="TodoEdit(${i})">Edit</button>
@@ -29,6 +52,7 @@ function TodoShow() {
         </li>`;
     }
     taskshow.innerHTML = listHTML;
+    // saveToLocalStorage();  <-- removed (save happens after add/update/delete)
 }
 
 function TodoEdit(index) {
@@ -59,16 +83,19 @@ function updateTask() {
         // replace the item at editIndex with edited value
         todoarr.splice(editIndex, 1, value);
         editIndex = -1;
+        saveToLocalStorage();   // persist after update
     }
     // restore UI to Add mode
     task.value = "";
     document.getElementById("add-btn").style.display = "inline-block";
     document.getElementById("update-btn").style.display = "none";
     TodoShow();
+    // saveToLocalStorage();  // already saved above
 }
 
 function Tododelete(index) {
     todoarr.splice(index, 1);
+    saveToLocalStorage(); // persist after delete
     // if deleting the item being edited, reset edit state
     if (editIndex === index) {
         editIndex = -1;
@@ -82,3 +109,8 @@ function Tododelete(index) {
     }
     TodoShow();
 }
+
+// ensure saved todos load on page open
+document.addEventListener('DOMContentLoaded', function () {
+    loadFromLocalStorage();
+});
